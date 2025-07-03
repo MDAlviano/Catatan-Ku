@@ -28,7 +28,10 @@ class NoteAdapter(
         val note = notes[position]
         holder.tvNote.text = note.note
         holder.itemView.setOnClickListener {
-            listener.onClick(note)
+            listener.onUpdate(note)
+        }
+        holder.iconDelete.setOnClickListener {
+            listener.onDelete(note)
         }
     }
 
@@ -48,7 +51,8 @@ class NoteAdapter(
     }
 
     interface OnAdapterListener {
-        fun onClick(note: NoteModel.Data)
+        fun onUpdate(note: NoteModel.Data)
+        fun onDelete(note: NoteModel.Data)
     }
 
 }

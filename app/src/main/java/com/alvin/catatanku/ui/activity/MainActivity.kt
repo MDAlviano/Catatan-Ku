@@ -3,11 +3,14 @@ package com.alvin.catatanku.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.alvin.catatanku.R
 import com.alvin.catatanku.data.NoteModel
+import com.alvin.catatanku.data.SubmitModel
 import com.alvin.catatanku.service.ApiRetrofit
+import com.alvin.catatanku.ui.activity.CreateActivity
 import com.alvin.catatanku.ui.adapter.NoteAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import retrofit2.Call
@@ -52,11 +55,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupAdapter() {
         noteAdapter = NoteAdapter(mutableListOf(), object : NoteAdapter.OnAdapterListener {
-            override fun onClick(note: NoteModel.Data) {
+            override fun onUpdate(note: NoteModel.Data) {
                 startActivity(
                     Intent(this@MainActivity, UpdateActivity::class.java)
                         .putExtra("note", note)
                 )
+            }
+            override fun onDelete(note: NoteModel.Data) {
+                deleteNote(id = note.id!!)
             }
 
         })
@@ -83,6 +89,30 @@ class MainActivity : AppCompatActivity() {
                 Log.e(this@MainActivity.localClassName, t.toString())
             }
         })
+    }
+
+    private fun deleteNote(id: String) {
+        api.delete(id = id)
+            .enqueue(object : Callback<SubmitModel> {
+                override fun onResponse(
+                    call: Call<SubmitModel?>,
+                    response: Response<SubmitModel?>
+                ) {
+                    if (response.isSuccessful) {
+                        if (response.isSuccessful) {
+                            val submit = response.body()
+                            Toast.makeText(applicationContext, submit!!.message, Toast.LENGTH_SHORT).show()
+                            getNote()
+                        }
+                    }
+                }
+                override fun onFailure(
+                    call: Call<SubmitModel?>,
+                    t: Throwable
+                ) {
+                    Log.e(this@MainActivity.localClassName, t.toString())
+                }
+            })
     }
 
 }

@@ -1,19 +1,14 @@
 package com.alvin.catatanku.ui.activity
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.alvin.catatanku.R
 import com.alvin.catatanku.data.NoteModel
 import com.alvin.catatanku.data.SubmitModel
 import com.alvin.catatanku.service.ApiRetrofit
-import com.alvin.catatanku.ui.activity.CreateActivity
 import com.google.android.material.button.MaterialButton
 import retrofit2.Call
 import retrofit2.Callback
