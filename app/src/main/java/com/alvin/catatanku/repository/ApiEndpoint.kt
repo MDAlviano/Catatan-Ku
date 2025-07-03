@@ -19,4 +19,11 @@ interface ApiEndpoint {
         @Field("note") note: String
     ): Call<SubmitModel>
 
+    @FormUrlEncoded
+    @POST("update.php")
+    fun update(
+        @Field("id") id: String,
+        @Field("note") note: String
+    ): Call<SubmitModel>
+
 }

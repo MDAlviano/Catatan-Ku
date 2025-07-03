@@ -51,7 +51,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupAdapter() {
-        noteAdapter = NoteAdapter(mutableListOf())
+        noteAdapter = NoteAdapter(mutableListOf(), object : NoteAdapter.OnAdapterListener {
+            override fun onClick(note: NoteModel.Data) {
+                startActivity(
+                    Intent(this@MainActivity, UpdateActivity::class.java)
+                        .putExtra("note", note)
+                )
+            }
+
+        })
         rvNotes.adapter = noteAdapter
     }
 
